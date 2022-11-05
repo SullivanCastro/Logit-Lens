@@ -8,6 +8,11 @@
 %pip install tqdm -q
 ```
 
+    [K     |████████████████████████████████| 5.5 MB 4.0 MB/s 
+    [K     |████████████████████████████████| 7.6 MB 20.1 MB/s 
+    [K     |████████████████████████████████| 163 kB 21.6 MB/s 
+    [?25h
+
 ## Importation of usual libraries
 
 
@@ -39,6 +44,22 @@ from transformers import AutoModelForSequenceClassification
 model = GPT2Model.from_pretrained("gpt2")
 ```
 
+
+    Downloading:   0%|          | 0.00/1.04M [00:00<?, ?B/s]
+
+
+
+    Downloading:   0%|          | 0.00/456k [00:00<?, ?B/s]
+
+
+
+    Downloading:   0%|          | 0.00/665 [00:00<?, ?B/s]
+
+
+
+    Downloading:   0%|          | 0.00/548M [00:00<?, ?B/s]
+
+
 ## Implementation of the layer scrapping
 
 
@@ -68,866 +89,13 @@ for k in range(NB_LAYERS):
 
 ```python
 """architecture of the model"""
-list(model.modules())
+#list(model.modules())
 ```
 
 
 
 
-    [GPT2Model(
-       (wte): Embedding(50257, 768)
-       (wpe): Embedding(1024, 768)
-       (drop): Dropout(p=0.1, inplace=False)
-       (h): ModuleList(
-         (0): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (1): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (2): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (3): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (4): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (5): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (6): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (7): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (8): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (9): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (10): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-         (11): GPT2Block(
-           (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (attn): GPT2Attention(
-             (c_attn): Conv1D()
-             (c_proj): Conv1D()
-             (attn_dropout): Dropout(p=0.1, inplace=False)
-             (resid_dropout): Dropout(p=0.1, inplace=False)
-           )
-           (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-           (mlp): GPT2MLP(
-             (c_fc): Conv1D()
-             (c_proj): Conv1D()
-             (act): NewGELUActivation()
-             (dropout): Dropout(p=0.1, inplace=False)
-           )
-         )
-       )
-       (ln_f): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-     ),
-     Embedding(50257, 768),
-     Embedding(1024, 768),
-     Dropout(p=0.1, inplace=False),
-     ModuleList(
-       (0): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (1): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (2): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (3): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (4): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (5): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (6): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (7): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (8): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (9): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (10): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-       (11): GPT2Block(
-         (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (attn): GPT2Attention(
-           (c_attn): Conv1D()
-           (c_proj): Conv1D()
-           (attn_dropout): Dropout(p=0.1, inplace=False)
-           (resid_dropout): Dropout(p=0.1, inplace=False)
-         )
-         (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-         (mlp): GPT2MLP(
-           (c_fc): Conv1D()
-           (c_proj): Conv1D()
-           (act): NewGELUActivation()
-           (dropout): Dropout(p=0.1, inplace=False)
-         )
-       )
-     ),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     GPT2Block(
-       (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (attn): GPT2Attention(
-         (c_attn): Conv1D()
-         (c_proj): Conv1D()
-         (attn_dropout): Dropout(p=0.1, inplace=False)
-         (resid_dropout): Dropout(p=0.1, inplace=False)
-       )
-       (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
-       (mlp): GPT2MLP(
-         (c_fc): Conv1D()
-         (c_proj): Conv1D()
-         (act): NewGELUActivation()
-         (dropout): Dropout(p=0.1, inplace=False)
-       )
-     ),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2Attention(
-       (c_attn): Conv1D()
-       (c_proj): Conv1D()
-       (attn_dropout): Dropout(p=0.1, inplace=False)
-       (resid_dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     Dropout(p=0.1, inplace=False),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True),
-     GPT2MLP(
-       (c_fc): Conv1D()
-       (c_proj): Conv1D()
-       (act): NewGELUActivation()
-       (dropout): Dropout(p=0.1, inplace=False)
-     ),
-     Conv1D(),
-     Conv1D(),
-     NewGELUActivation(),
-     Dropout(p=0.1, inplace=False),
-     LayerNorm((768,), eps=1e-05, elementwise_affine=True)]
+    'architecture of the model'
 
 
 
@@ -999,7 +167,7 @@ words_df = words_df.dropna(axis=1)
 logits_df = logits_df.dropna(axis=1)
 ```
 
-    100%|██████████| 11/11 [00:01<00:00,  7.60it/s]
+    100%|██████████| 11/11 [00:01<00:00,  9.69it/s]
 
 
 # Data analysis
@@ -1015,7 +183,7 @@ logits_df
 
 
 
-  <div id="df-e05b51c4-1181-43fb-88a1-5c482a50dedf">
+  <div id="df-bcdf709a-bd32-495c-9097-153e45fcf4c4">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -1168,7 +336,7 @@ logits_df
   </tbody>
 </table>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-e05b51c4-1181-43fb-88a1-5c482a50dedf')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-bcdf709a-bd32-495c-9097-153e45fcf4c4')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -1219,12 +387,12 @@ logits_df
 
       <script>
         const buttonEl =
-          document.querySelector('#df-e05b51c4-1181-43fb-88a1-5c482a50dedf button.colab-df-convert');
+          document.querySelector('#df-bcdf709a-bd32-495c-9097-153e45fcf4c4 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-e05b51c4-1181-43fb-88a1-5c482a50dedf');
+          const element = document.querySelector('#df-bcdf709a-bd32-495c-9097-153e45fcf4c4');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -1258,7 +426,7 @@ words_df
 
 
 
-  <div id="df-68af9adb-8287-4e19-bf1e-db21634a178a">
+  <div id="df-a5453285-d80b-4ab9-842b-c21036d1efb8">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -1411,7 +579,7 @@ words_df
   </tbody>
 </table>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-68af9adb-8287-4e19-bf1e-db21634a178a')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-a5453285-d80b-4ab9-842b-c21036d1efb8')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -1462,12 +630,12 @@ words_df
 
       <script>
         const buttonEl =
-          document.querySelector('#df-68af9adb-8287-4e19-bf1e-db21634a178a button.colab-df-convert');
+          document.querySelector('#df-a5453285-d80b-4ab9-842b-c21036d1efb8 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-68af9adb-8287-4e19-bf1e-db21634a178a');
+          const element = document.querySelector('#df-a5453285-d80b-4ab9-842b-c21036d1efb8');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
