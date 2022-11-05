@@ -1,31 +1,3 @@
-# Imports
-
-## Installation of libraries
-
-## Importation of usual libraries
-
-# Set up the model
-
-## Importation of the GPT2 tokenizer and model 
-
-## Implementation of the layer scrapping
-
-### BONUS : illustration of the model architecture
-
-# Implementation of the algorithm
-
-## Run the test
-
-## Decode algorithm implementation
-
-## Shape the results
-
-# Data analysis
-
-## Logits dataframe
-
-## Output words dataframe
-
 ## Data visualization
  
 ![png](logit_lens_files/logit_lens_25_0.png)
