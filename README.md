@@ -6,7 +6,7 @@
     
 ## Analysis of the results
 
-In the explanation, we will use the term logits. The logits of a model are positive numbers representing the probability of belonging to the output class: the higher the logit, the more likely it is that the input will match the output. Logits are not probabilities because they can exceed 1. To pass from logits to probability it is necessary to apply the softmax function to logits for example.
+A machine learning model is a black box which takes inputs and resend outputs. The interpretability of the outputs is the major stake to understand the models. A method to interprete the results is the logit lens. For a sentence, I decoded outputs of each blocks to monitor the GPT-2 algorithm.
 
 The first salient information from the results is the inequality of confidence between the last layers and the first ones. Indeed, the first layers try to find correlated words while the last layer makes a decision. This gives an idea of the architecture of the gpt2 model.
 
